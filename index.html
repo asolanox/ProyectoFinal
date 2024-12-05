@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Final Lab. Prog. III</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: beige;
+            color: black;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: darkgreen;
+        }
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+        button {
+            background-color: orange;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: darkorange;
+        }
+        #edit-button, #new-app-button, #close-button {
+            position: fixed;
+            bottom: 20px;
+        }
+        #edit-button {
+            left: 20px;
+        }
+        #new-app-button {
+            left: calc(50% - 50px);
+        }
+        #close-button {
+            right: 20px;
+        }
+		
+		p {
+			text-align: left;
+		}
+    </style>
+</head>
+<body>
+
+		<p>
+			<span>
+				UNIVERSIDAD AUTONOMA DE SANTO DOMINGO<br>
+				Escuela de Informatica<br>
+				Alexander Solano de la Cruz,	AB5972<br>
+				Prof. Lic. Radhames Silverio<br>
+				<br>
+			</span>
+		</p>
+			 <br>
+
+    <h1><i>Proyecto Final Laboratorio de Programación III</i></h1>
+	<br><br>
+   
+    <div class="button-grid" id="button-container">
+        <button onclick="window.open('https://asolanox.github.io/Pagina-Web-Personal-en-HTML/')">Página Web Personal HTML</button>
+        <button onclick="window.open('https://asolanox.github.io/Tabla102EtiquetasHTML/')">102 Etiquetas HTML</button>
+        <button onclick="window.open('https://asolanox.github.io/EstructuraMenuCSS/')">Estructura de menús usando CSS</button>
+        <button onclick="window.open('https://asolanox.github.io/ValidarCedula/')">Validar cédula usando algoritmo del módulo 10</button>
+        <button onclick="window.open('https://asolanox.github.io/CrearMenuDinamicoJSONXML/')">Menú dinámico con (JSON, XML.....)</button>
+        <button onclick="window.open('https://asolanox.github.io/FormMultiplePaginas/')">Formulario con múltiples páginas</button>
+        <button onclick="window.open('https://asolanox.github.io/FormCodigoQR/')">Formulario de contactos, código QR</button>
+        <button onclick="window.open('https://asolanox.github.io/FormLibGraficos/')">Formulario con librería para gráficos</button>
+        <button onclick="window.open('https://asolanox.github.io/ResumenXML/')">Resumen de XML y su uso</button>
+        <button onclick="window.open('https://asolanox.github.io/ResumenJSON/')">Resumen de JSON y su uso</button>
+        <button onclick="window.open('https://asolanox.github.io/ResumenAJAX/')">Resumen de AJAX y su uso</button>
+        <button onclick="window.open('http://asolano.000.pe/')">Formulario Acceso BD</button>
+        <button onclick="window.open('https://asolanox.github.io/ResumenMVC/')">Resumen MVC y su uso</button>
+        <button onclick="window.open('https://asolanox.github.io/ServicioValidarCedula/')">Servicio Web validar cédula mód10</button>
+        <button onclick="window.open('https://asolanox.github.io/SpringFramework/')">Funcionalidades SpringFramework</button>
+    </div>
+
+    <button id="edit-button" onclick="openEditDialog()">Editar Menu de opciones</button>
+    <button id="new-app-button" onclick="openNewAppDialog()">Agregar Nueva Aplicación</button>
+    <button id="close-button" onclick="window.close()">Cerrar aplicación</button>
+
+    <script>
+        function openEditDialog() {
+            let dialogContent = '';
+            const buttons = document.querySelectorAll('.button-grid button');
+            buttons.forEach((button, index) => {
+                const name = button.innerText;
+                const url = button.getAttribute('onclick').match(/'([^']+)'/)[1];
+                dialogContent += `
+                    <div>
+                        <p>${name}</p>
+                        <input type="text" placeholder="Nuevo nombre" value="${name}" id="name-${index}">
+                        <input type="text" placeholder="Nueva URL" value="${url}" id="url-${index}">
+                        <button onclick="editEntry(${index})">Editar</button>
+                        <button onclick="deleteEntry(${index})">Eliminar</button>
+						<br>
+						<br>
+                    </div>`;
+            });
+            const editDialog = document.createElement('div');
+            editDialog.innerHTML = dialogContent;
+            document.body.appendChild(editDialog);
+        }
+
+        function editEntry(index) {
+            const name = document.getElementById(`name-${index}`).value;
+            const url = document.getElementById(`url-${index}`).value;
+            const button = document.querySelector(`.button-grid button:nth-child(${index + 1})`);
+            button.innerText = name;
+            button.setAttribute('onclick', `window.open('${url}')`);
+            alert('Registro actualizado.');
+        }
+
+        function deleteEntry(index) {
+            const button = document.querySelector(`.button-grid button:nth-child(${index + 1})`);
+            button.innerText = '';
+            button.setAttribute('onclick', '');
+            alert('Registro eliminado.');
+        }
+
+        function openNewAppDialog() {
+            const name = prompt("Ingrese el nombre del nuevo botón:");
+            const url = prompt("Ingrese la URL del nuevo botón:");
+            if (name && url) {
+                const buttonContainer = document.getElementById('button-container');
+                const newButton = document.createElement('button');
+                newButton.innerText = name;
+                newButton.setAttribute('onclick', `window.open('${url}')`);
+                buttonContainer.appendChild(newButton);
+                alert('Nuevo botón agregado.');
+            }
+        }
+		
+    </script>
+	
+</body>
+</html>
+
+		
+
+ 
